@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CartItem>
+ * @extends Factory<CartItem>
  */
-class CartItemFactory extends Factory
+final class CartItemFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,8 +19,6 @@ class CartItemFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

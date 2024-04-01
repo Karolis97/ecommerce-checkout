@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Cart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Cart>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\State>
  */
-final class CartFactory extends Factory
+final class StateFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,8 +18,6 @@ final class CartFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'session_id' => fake()->uuid(),
-        ];
+        return [];
     }
 }

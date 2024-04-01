@@ -7,22 +7,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-final class Product extends Model
+final class Country extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
         'name',
-        'description',
-        'price',
-        'stock_quantity',
     ];
 
-    public function cartItems(): HasMany
+    public function states(): HasMany
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(State::class);
     }
 }
