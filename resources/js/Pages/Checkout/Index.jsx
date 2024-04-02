@@ -13,11 +13,10 @@ export default function CheckoutIndex() {
                         <CheckoutForm />
                     </div>
                 </div>
-                <div className="col-span-2 py-20 bg-white">
+                <div className="hidden md:block col-span-2 py-20 bg-white">
                     <CheckoutCart />
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

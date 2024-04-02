@@ -21,14 +21,16 @@ export default function Footer() {
     ]
     return (
         <footer className="bg-[#DC624E]">
-            <div className="container mx-auto flex justify-between py-4">
-                <div className="flex gap-8 items-center">
-                    <ApplicationLogo />
-                    {links.map((link) => (
-                        <a href={link.href} className="text-sm text-white opacity-60">{link.name}</a>
-                    ))}
+            <div className="container mx-auto flex flex-col lg:flex-row lg:justify-between py-4 gap-4">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
+                    <ApplicationLogo className="mx-auto" />
+                    <div className="flex items-center gap-4 lg:gap-8 mx-auto">
+                        {links.map((link) => (
+                            <a href={link.href} className="text-sm text-white opacity-60">{link.name}</a>
+                        ))}
+                    </div>
                 </div>
-                <p className="text-sm text-white opacity-60">© 2022 Logoipsum. All  rights reserved</p>
+                <p className="text-sm text-white opacity-60 text-center lg:text-right">© 2022 Logoipsum. All  rights reserved</p>
             </div>
         </footer>
     );

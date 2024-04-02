@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import ApplicationLogo from "../Components/ApplicationLogo.jsx";
+import Footer from "../Components/Footer.jsx";
 
 function App() {
     return (
@@ -14,13 +15,7 @@ function App() {
                 </div>
             </header>
             <Outlet />
-            <footer className="md:hidden">
-                <div className="container mx-auto">
-                    <div className="flex justify-center">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     )
 }

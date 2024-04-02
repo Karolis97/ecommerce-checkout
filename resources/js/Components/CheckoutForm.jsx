@@ -85,16 +85,18 @@ export default function CheckoutForm() {
                 <div className="flex flex-col space-y-3">
                     <SectionTitle>Shipping Address</SectionTitle>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <TextInput
-                            id="address"
-                            type="address"
-                            name="address"
-                            className="mt-1 block w-full col-span-3"
-                            placeholder="Address*"
-                            disabled={ order.loading }
-                            onChange={handleInputChange}
-                        />
-                        <InputError errors={order.errors} field="address" className="mt-2" />
+                        <div>
+                            <TextInput
+                                id="address"
+                                type="address"
+                                name="address"
+                                className="mt-1 block w-full col-span-3"
+                                placeholder="Address*"
+                                disabled={ order.loading }
+                                onChange={handleInputChange}
+                            />
+                            <InputError errors={order.errors} field="address" className="mt-2" />
+                        </div>
 
                         <div>
                             <SelectInput
@@ -149,8 +151,8 @@ export default function CheckoutForm() {
                     <div className="border border-[#F2F2F2] rounded-md divide-y divide-[#E0E0E0]">
                         <p className="text-[#333333] text-sm p-3">Credit Card</p>
 
-                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 bg-[#FAFAFA] p-3">
-                            <div className="col-span-2 md:col-span-5">
+                        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 bg-[#FAFAFA] p-3">
+                            <div className="col-span-2 lg:col-span-5">
                                 <TextInput
                                     type="tel"
                                     id="card_number"
