@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
 use App\Http\Requests\StoreOrderRequest;
 use App\Services\CartService;
 use App\Services\OrderService;
@@ -25,7 +26,8 @@ final class OrderController extends Controller
             }
 
             $order = $orderService->createOrder($request->validated(), $cart);
-            $cartService->destroyCart();
+            //            $cartService->destroyCart();
+            OrderCreated::dispatch($order);
 
             return response()->json(['success' => true, 'data' => ['order_id' => $order->id]]);
         } catch (Exception $exception) {
