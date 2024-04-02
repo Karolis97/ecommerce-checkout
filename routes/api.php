@@ -13,6 +13,7 @@ Route::get('/user', fn(Request $request) => $request->user())->middleware('auth:
 
 Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('cart', [CartController::class, 'update'])->name('cart.update');
+Route::delete('cart/{productId}', [CartController::class, 'deleteProduct'])->name('cart.delete-product');
 Route::post('order', [OrderController::class, 'store'])->name('order.store');
 Route::get('countries', CountryController::class);
 Route::get('countries/{country_id}/states', StateController::class);

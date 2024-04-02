@@ -12,20 +12,26 @@ use Illuminate\Http\JsonResponse;
 
 final class CartController extends Controller
 {
-    public function show(CartService $cartService): JsonResponse
+    private CartService $cartService;
+    public function __construct(CartService $cartService)
     {
-        if ($cartService->getCart()->items->isEmpty()) {
-            $this->update($cartService);
-        }
-
-        return response()->json(CartResource::make($cartService->getCart()));
+        $this->cartService = $cartService;
     }
 
-    public function update(CartService $cartService): JsonResponse
+    public function show(): JsonResponse
+    {
+        if ($this->cartService->getCart()->items->isEmpty()) {
+            $this->update();
+        }
+
+        return response()->json(CartResource::make($this->cartService->getCart()));
+    }
+
+    public function update(): JsonResponse
     {
         try {
             $products = Product::inRandomOrder()->limit(2)->get(['id', 'price', 'stock_quantity']);
-            $cartService->addItems($products);
+            $this->cartService->addItems($products);
 
             return response()->json(['success' => true]);
         } catch (Exception $exception) {
@@ -37,5 +43,12 @@ final class CartController extends Controller
 
             return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
         }
+    }
+
+    public function deleteProduct(int $productId): JsonResponse
+    {
+        $this->cartService->removeItem($productId);
+
+        return response()->json(['success' => true, 'message' => 'Product removed successfully']);
     }
 }

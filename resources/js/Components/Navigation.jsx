@@ -4,8 +4,9 @@ import ArrowRight from "../../images/arrow-right.svg";
 import ProductImage from "../../images/product-image.png";
 import Dropdown from "./Dropdown";
 import React, {useState} from "react";
+import RemoveIcon from "../../images/icon-x.svg";
 
-export default function Navigation({ cart, isLoading, error }) {
+export default function Navigation({ cart, isLoading, error, removeFromCart }) {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
@@ -35,11 +36,20 @@ export default function Navigation({ cart, isLoading, error }) {
                 <Dropdown.Content>
                     <div className="space-y-4 pb-4">
                         {cart.items.map((item, index) => (
-                            <div key={index} className="flex justify-between items-center border-b border-[#E0E0E0] py-6">
+                            <div key={index} className="flex justify-between items-center border-b border-[#E0E0E0] py-3">
                                 <div className="flex items-center gap-4">
                                     <img src={ProductImage} alt="" className="max-w-[58px]"/>
-                                    <p className="text-sm"><span
-                                        className="text-[#000000]">{item.quantity}x</span> {item.product.name}</p>
+
+                                    <div>
+                                        <p className="text-base">
+                                            <span className="text-[#000000] font-semibold">{item.quantity}x </span>
+                                            {item.product.name}
+                                        </p>
+                                        <button type="button" className="cursor-pointer text-[#DC624E] flex gap-2 items-baseline" onClick={() => removeFromCart(item.product.id)}>
+                                            <img src={RemoveIcon} alt="" />
+                                            <span className="text-[10px]">Remove</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 <span className="text-[#000000] text-sm">${item.total_price}</span>
                             </div>

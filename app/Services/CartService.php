@@ -34,6 +34,13 @@ final class CartService
         return $this;
     }
 
+    public function removeItem(int $productId): self
+    {
+        $this->cart->items()->where('product_id', $productId)->delete();
+
+        return $this;
+    }
+
     public function getCart(): Cart
     {
         return $this->cart;
