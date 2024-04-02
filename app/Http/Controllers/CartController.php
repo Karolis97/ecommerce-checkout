@@ -14,6 +14,10 @@ final class CartController extends Controller
 {
     public function show(CartService $cartService): JsonResponse
     {
+        if ($cartService->getCart()->items->isEmpty()) {
+            $this->update($cartService);
+        }
+
         return response()->json(CartResource::make($cartService->getCart()));
     }
 

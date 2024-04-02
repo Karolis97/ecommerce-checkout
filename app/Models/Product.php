@@ -25,4 +25,9 @@ final class Product extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    public function getPriceByQuantity(int $quantity): string
+    {
+        return number_format($this->price * $quantity / 100, 2, '.', '');
+    }
 }

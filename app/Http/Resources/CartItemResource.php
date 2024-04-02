@@ -17,8 +17,9 @@ final class CartItemResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'quantity' => $this->quantity,
-            'product'  => $this->whenLoaded('product', fn() => ProductResource::make($this->product)),
+            'quantity'    => $this->quantity,
+            'product'     => $this->whenLoaded('product', fn() => ProductResource::make($this->product)),
+            'total_price' => $this->product->getPriceByQuantity($this->quantity),
         ];
     }
 }
