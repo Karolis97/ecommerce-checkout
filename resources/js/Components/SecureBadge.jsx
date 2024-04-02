@@ -9,7 +9,7 @@ export default function SecureBadge() {
     return (
         <div className="flex justify-center items-center gap-1">
              {secureImages.map((ImageSrc, index) => (
-                 <img key={index} src={ImageSrc} alt={`Secure Badge ${index}`} />
+                 <img key={index} src={ImageSrc} alt={`Secure Badge ${index}`} className="max-w-[65px] md:max-w-full" />
              ))}
         </div>
     );

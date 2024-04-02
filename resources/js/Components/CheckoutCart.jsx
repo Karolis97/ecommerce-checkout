@@ -1,29 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import useCart from "../hooks/useCart.js";
 
-export default function CheckoutCart() {
-    // State to store cart items
-    const [cart, setCart] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    // Function to fetch cart data from the API
-    const fetchCartData = async () => {
-        try {
-            const response = await axios.get('/cart');
-            setCart(response.data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    // useEffect to trigger the fetch when the component mounts
-    useEffect(() => {
-        fetchCartData();
-    }, []);
-
+export default function CheckoutCart({ cart, isLoading, error }) {
     return (
         <div className="max-w-md mx-auto px-4">
             {isLoading ? (

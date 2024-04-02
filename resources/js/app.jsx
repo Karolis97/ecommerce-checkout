@@ -1,10 +1,5 @@
 import './bootstrap';
 
-import.meta.glob([
-    '../images/**',
-    '../fonts/**',
-]);
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from 'react'
 import { createRoot } from 'react-dom/client';
