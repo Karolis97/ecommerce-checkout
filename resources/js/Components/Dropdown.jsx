@@ -9,7 +9,6 @@ const Dropdown = ({ children, onToggle }) => {
     const toggleOpen = () => {
         setOpen((previousState) => {
             const newState = !previousState;
-            console.log(onToggle);
             if (onToggle) {
                 onToggle(newState);
             }

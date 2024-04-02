@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 final class StoreOrderRequest extends FormRequest
@@ -24,19 +22,48 @@ final class StoreOrderRequest extends FormRequest
             'address'    => 'required|string|max:255',
             'country_id' => 'required|exists:countries,id',
             'state_id'   => [
-                'nullable',
+                'required',
                 Rule::exists('states', 'id')->where(fn($query) => $query->where('country_id', $this->country_id)),
             ],
             'postal_code' => 'required|string|max:255',
+            'card_cvv'    => 'required|numeric|digits_between:3,4',
+            'card_expiry' => [
+                'required',
+                'date_format:m/y',
+                'after_or_equal:' . date('m/y')
+            ],
+            'card_number' => [
+                'required',
+                'string',
+                'regex:/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/', // Validates the format 1111 2222 3333 4444
+                function ($attribute, $value, $fail): void {
+                    // Removing spaces for the Luhn check
+                    $number = str_replace(' ', '', $value);
+                    if ( ! preg_match('/^\d+$/', $number) || ! $this->luhn_check($number)) {
+                        $fail($attribute . ' is invalid.');
+                    }
+                },
+            ],
         ];
     }
 
-    public function failedValidation(Validator $validator): void
+    private function luhn_check($number): bool
     {
-        throw new HttpResponseException(response()->json([
-            'status'  => 'false',
-            'message' => 'Validation errors',
-            'data'    => $validator->errors(),
-        ]));
+        $len      = mb_strlen($number);
+        $sum      = 0;
+        $isSecond = false;
+        for ($i = $len - 1; $i >= 0; $i--) {
+            $d = $number[$i];
+
+            if ($isSecond) {
+                $d *= 2;
+            }
+
+            $sum += floor($d / 10);
+            $sum += $d % 10;
+
+            $isSecond = ! $isSecond;
+        }
+        return (0 === $sum % 10);
     }
 }

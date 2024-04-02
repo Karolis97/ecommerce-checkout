@@ -11,7 +11,7 @@ export function useOrder() {
         setLoading(true)
         setErrors({})
 
-        return axios.post('/api/order', data)
+        return axios.post('/order', data)
             .then(() => navigate('/'))
             .catch(error => {
                 if (error.response.status === 422) {

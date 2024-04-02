@@ -4,19 +4,22 @@ import TextInput from "./TextInput.jsx";
 import InputError from "./InputError.jsx";
 import SelectInput from "./SelectInput.jsx";
 import PrimaryButton from "./PrimaryButton.jsx";
-import {useOrder} from "../hooks/useOrder.jsx";
-import {useNavigate} from "react-router-dom";
+import {useOrder} from "../hooks/useOrder.js";
 import {formatCreditCardNumber, formatCVV, formatExpirationDate} from "../utils.js";
 import SecureBadge from "./SecureBadge.jsx";
+import useCountries from "../hooks/useCountries";
+import {useState} from "react";
+import useStatesByCountry from "../hooks/useStatesByCountry.js";
 
 export default function CheckoutForm() {
-    const { order, createOrder } = useOrder()
-    const navigate = useNavigate()
+    const { order, createOrder } = useOrder();
+    const { countries, countriesLoading, countriesError } = useCountries();
+
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const { states, statesLoading, statesError } = useStatesByCountry(selectedCountry);
 
     async function handleSubmit(event) {
         event.preventDefault()
-        console.log(order.data);
-        return false;
         await createOrder(order.data)
     }
 
@@ -36,6 +39,9 @@ export default function CheckoutForm() {
                 break;
             case 'card_cvv':
                 target.value = formatCVV(target.value)
+                break;
+            case 'country_id':
+                setSelectedCountry(target.value);
                 break;
             default:
                 break;
@@ -85,12 +91,12 @@ export default function CheckoutForm() {
                 <div className="flex flex-col space-y-3">
                     <SectionTitle>Shipping Address</SectionTitle>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
+                        <div className="md:col-span-3">
                             <TextInput
                                 id="address"
                                 type="address"
                                 name="address"
-                                className="mt-1 block w-full col-span-3"
+                                className="mt-1 block w-full"
                                 placeholder="Address*"
                                 disabled={ order.loading }
                                 onChange={handleInputChange}
@@ -105,8 +111,8 @@ export default function CheckoutForm() {
                                 className="mt-1 block w-full"
                                 placeholder="Select"
                                 label="Country*"
-                                disabled={order.loading}
-                                options={options}
+                                disabled={order.loading || countriesLoading || countriesError}
+                                options={countries}
                                 selectedValue={order.data.country_id}
                                 onChange={handleInputChange}
                             />
@@ -121,8 +127,8 @@ export default function CheckoutForm() {
                                 className="mt-1 block w-full"
                                 placeholder="Select"
                                 label="Region/State*"
-                                disabled={order.loading}
-                                options={options}
+                                disabled={order.loading || statesLoading || statesError || !selectedCountry}
+                                options={states}
                                 selectedValue={order.data.state_id}
                                 onChange={handleInputChange}
                             />
@@ -162,7 +168,6 @@ export default function CheckoutForm() {
                                     disabled={ order.loading }
                                     pattern='[\d| ]{16,22}'
                                     maxLength='19'
-                                    required
                                     onChange={handleInputChange}
                                 />
                                 <InputError errors={order.errors} field="card_number" className="mt-2" />
@@ -178,7 +183,6 @@ export default function CheckoutForm() {
                                     disabled={ order.loading }
                                     pattern='\d\d/\d\d'
                                     maxLength='19'
-                                    required
                                     onChange={handleInputChange}
                                 />
                                 <InputError errors={order.errors} field="card_expiry" className="mt-2" />
@@ -192,7 +196,6 @@ export default function CheckoutForm() {
                                     className="mt-1 block w-full col-span-3"
                                     placeholder="CVV"
                                     pattern="\d{3}"
-                                    required
                                     disabled={ order.loading }
                                     onChange={handleInputChange}
                                 />
