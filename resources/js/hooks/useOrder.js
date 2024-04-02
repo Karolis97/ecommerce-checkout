@@ -12,7 +12,7 @@ export function useOrder() {
         setErrors({})
 
         return axios.post('/order', data)
-            .then(() => navigate('/'))
+            .then(() => navigate('/order-created'))
             .catch(error => {
                 if (error.response.status === 422) {
                     setErrors(error.response.data.errors)

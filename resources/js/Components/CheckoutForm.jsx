@@ -21,7 +21,6 @@ export default function CheckoutForm() {
     async function handleSubmit(event) {
         event.preventDefault();
         await createOrder(order.data);
-        window.location.reload();
     }
 
     const options = [
