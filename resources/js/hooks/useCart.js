@@ -9,11 +9,9 @@ const useCart = () => {
     useEffect(() => {
         const fetchCartData = async () => {
             try {
-                console.log("FETCHING")
                 const response = await axios.get('/cart');
                 setCart(response.data);
             } catch (error) {
-                console.log(error);
                 setError(error.message);
             } finally {
                 setIsLoading(false);

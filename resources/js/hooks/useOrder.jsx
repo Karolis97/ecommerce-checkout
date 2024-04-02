@@ -21,8 +21,6 @@ export function useOrder() {
             .finally(() => setLoading(false))
     }
 
-    console.log(data);
-
     return {
         order: { data, setData, errors, loading },
         createOrder,

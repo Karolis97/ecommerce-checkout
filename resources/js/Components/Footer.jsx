@@ -25,8 +25,8 @@ export default function Footer() {
                 <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-8">
                     <ApplicationLogo className="mx-auto" />
                     <div className="flex items-center gap-4 lg:gap-8 mx-auto">
-                        {links.map((link) => (
-                            <a href={link.href} className="text-sm text-white opacity-60">{link.name}</a>
+                        {links.map((link, index) => (
+                            <a key={index} href={link.href} className="text-sm text-white opacity-60">{link.name}</a>
                         ))}
                     </div>
                 </div>

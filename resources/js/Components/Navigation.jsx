@@ -10,7 +10,6 @@ export default function Navigation({ cart, isLoading, error }) {
         setIsDropdownOpen(isOpen);
     };
 
-
     return (
         <div>
             <Dropdown onToggle={handleDropdownToggle}>
@@ -31,8 +30,8 @@ export default function Navigation({ cart, isLoading, error }) {
 
                 <Dropdown.Content>
                     <div className="space-y-4 pb-4">
-                        {cart.items.map(item => (
-                            <div className="flex justify-between items-center border-b border-[#E0E0E0] py-6">
+                        {cart.items.map((item, index) => (
+                            <div key={index} className="flex justify-between items-center border-b border-[#E0E0E0] py-6">
                                 <div className="flex items-center gap-4">
                                     <img src="https://i.ibb.co/51GVZqV/Group-1802.png" alt="" className="max-w-[58px]"/>
                                     <p className="text-sm"><span

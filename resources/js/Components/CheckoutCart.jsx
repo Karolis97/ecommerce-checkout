@@ -11,8 +11,8 @@ export default function CheckoutCart({ cart, isLoading, error }) {
                 <div>Error: {error}</div>
             ) : (
                 <div className="space-y-6">
-                    {cart.items.map(item => (
-                        <div className="flex justify-between items-center border-b-2 border-[#E0E0E0] py-6">
+                    {cart.items.map((item, index) => (
+                        <div key={index} className="flex justify-between items-center border-b-2 border-[#E0E0E0] py-6">
                             <div className="flex items-center gap-8">
                                 <img src="https://i.ibb.co/51GVZqV/Group-1802.png" alt="" className="max-w-[72px]"/>
                                 <p className="text-base"><span
