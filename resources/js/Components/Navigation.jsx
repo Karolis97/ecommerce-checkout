@@ -1,10 +1,14 @@
 import CartImage from "../../images/cart.svg";
 import ArrowTop from "../../images/arrow-top.svg";
 import ArrowRight from "../../images/arrow-right.svg";
+import ProductImage from "../../images/product-image.png";
 import Dropdown from "./Dropdown";
 import React, {useState} from "react";
 
 export default function Navigation({ cart, isLoading, error }) {
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const handleDropdownToggle = (isOpen) => {
         setIsDropdownOpen(isOpen);
@@ -33,7 +37,7 @@ export default function Navigation({ cart, isLoading, error }) {
                         {cart.items.map((item, index) => (
                             <div key={index} className="flex justify-between items-center border-b border-[#E0E0E0] py-6">
                                 <div className="flex items-center gap-4">
-                                    <img src="https://i.ibb.co/51GVZqV/Group-1802.png" alt="" className="max-w-[58px]"/>
+                                    <img src={ProductImage} alt="" className="max-w-[58px]"/>
                                     <p className="text-sm"><span
                                         className="text-[#000000]">{item.quantity}x</span> {item.product.name}</p>
                                 </div>

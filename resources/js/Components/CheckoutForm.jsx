@@ -19,8 +19,9 @@ export default function CheckoutForm() {
     const { states, statesLoading, statesError } = useStatesByCountry(selectedCountry);
 
     async function handleSubmit(event) {
-        event.preventDefault()
-        await createOrder(order.data)
+        event.preventDefault();
+        await createOrder(order.data);
+        window.location.reload();
     }
 
     const options = [
