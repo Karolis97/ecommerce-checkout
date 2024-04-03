@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 
-final class CartService
+class CartService
 {
     private Cart $cart;
 
@@ -19,10 +19,14 @@ final class CartService
             false => auth()->user()->cart ?: auth()->user()->cart()->create(),
         };
 
-        $this->cart->load('items.product');
+        // TODO: Implement add to cart logic
+        if ($this->cart->items->isEmpty()) {
+            $products = Product::inRandomOrder()->limit(2)->get(['id', 'price', 'stock_quantity']);
+            $this->addItems($products);
+        }
     }
 
-    public function addItems(Collection $products): self
+    public function addItems(Collection $products): Cart
     {
         $this->cart->items()->createMany(
             $products->map(fn(Product $product) => [
@@ -31,11 +35,15 @@ final class CartService
             ])->toArray()
         );
 
-        return $this;
+        info('Adding products to cart', ['product_ids' => $products->pluck('id')->toArray()]);
+        info('Cart items', ['items' => $this->cart->items()->get()]);
+        info('Cart id and session id', ['cart_id' => $this->cart->id, 'session_id' => $this->cart->session_id]);
+        return $this->cart;
     }
 
     public function removeItem(int $productId): self
     {
+        info($this->cart->id);
         $this->cart->items()->where('product_id', $productId)->delete();
 
         return $this;
@@ -43,6 +51,8 @@ final class CartService
 
     public function getCart(): Cart
     {
+        $this->cart->load('items.product');
+
         return $this->cart;
     }
 

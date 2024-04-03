@@ -19,6 +19,8 @@ final class CountryFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'name' => fake()->country(),
+        ];
     }
 }

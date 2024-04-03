@@ -20,10 +20,6 @@ final class CartController extends Controller
 
     public function show(): JsonResponse
     {
-        if ($this->cartService->getCart()->items->isEmpty()) {
-            $this->update();
-        }
-
         return response()->json(CartResource::make($this->cartService->getCart()));
     }
 
@@ -35,10 +31,10 @@ final class CartController extends Controller
 
             return response()->json(['success' => true]);
         } catch (Exception $exception) {
+            // TODO: Implement exception
             info('Failed to add products to cart', [
                 'user_id' => auth()->user()?->getAuthIdentifier(),
                 'message' => $exception->getMessage(),
-                'code'    => $exception->getCode(),
             ]);
 
             return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);

@@ -27,7 +27,7 @@ final class UserSeeder extends Seeder
                     ->has(
                         OrderItem::factory(3)->state(function () use ($products) {
                             $product  = $products->random();
-                            $quantity = random_int(1, min($product->stock_quantity, 5));
+                            $quantity = random_int(1, min($product->stock_quantity, 3));
                             $price    = $quantity * $product->price;
                             $product->decrement('stock_quantity', $quantity);
 
@@ -46,7 +46,7 @@ final class UserSeeder extends Seeder
                     ->has(
                         CartItem::factory(3)->state(function () use ($products) {
                             $product  = $products->random();
-                            $quantity = random_int(1, min($product->stock_quantity, 5));
+                            $quantity = random_int(1, min($product->stock_quantity, 3));
 
                             return [
                                 'product_id' => $product->id,

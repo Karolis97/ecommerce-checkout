@@ -26,11 +26,12 @@ final class OrderController extends Controller
             }
 
             $order = $orderService->createOrder($request->validated(), $cart);
-            //            $cartService->destroyCart();
+            $cartService->destroyCart();
             OrderCreated::dispatch($order);
 
             return response()->json(['success' => true, 'data' => ['order_id' => $order->id]]);
         } catch (Exception $exception) {
+            // TODO: Implement exception
             info('Failed to create order', [
                 'user_id' => auth()->user()?->getAuthIdentifier(),
                 'message' => $exception->getMessage(),
