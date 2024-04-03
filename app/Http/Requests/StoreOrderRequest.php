@@ -26,24 +26,24 @@ final class StoreOrderRequest extends FormRequest
                 Rule::exists('states', 'id')->where(fn($query) => $query->where('country_id', $this->country_id)),
             ],
             'postal_code' => 'required|string|max:255',
-            'card_cvv'    => 'required|numeric|digits_between:3,4',
-            'card_expiry' => [
-                'required',
-                'date_format:m/y',
-                'after_or_equal:' . date('m/y')
-            ],
-            'card_number' => [
-                'required',
-                'string',
-                'regex:/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/', // Validates the format 1111 2222 3333 4444
-                function ($attribute, $value, $fail): void {
-                    // Removing spaces for the Luhn check
-                    $number = str_replace(' ', '', $value);
-                    if ( ! preg_match('/^\d+$/', $number) || ! $this->luhn_check($number)) {
-                        $fail($attribute . ' is invalid.');
-                    }
-                },
-            ],
+            //            'card_cvv'    => 'required|numeric|digits_between:3,4',
+            //            'card_expiry' => [
+            //                'required',
+            //                'date_format:m/y',
+            //                'after_or_equal:' . date('m/y')
+            //            ],
+            //            'card_number' => [
+            //                'required',
+            //                'string',
+            //                'regex:/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/', // Validates the format 1111 2222 3333 4444
+            //                function ($attribute, $value, $fail): void {
+            //                    // Removing spaces for the Luhn check
+            //                    $number = str_replace(' ', '', $value);
+            //                    if ( ! preg_match('/^\d+$/', $number) || ! $this->luhn_check($number)) {
+            //                        $fail($attribute . ' is invalid.');
+            //                    }
+            //                },
+            //            ],
         ];
     }
 

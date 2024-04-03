@@ -35,15 +35,11 @@ class CartService
             ])->toArray()
         );
 
-        info('Adding products to cart', ['product_ids' => $products->pluck('id')->toArray()]);
-        info('Cart items', ['items' => $this->cart->items()->get()]);
-        info('Cart id and session id', ['cart_id' => $this->cart->id, 'session_id' => $this->cart->session_id]);
         return $this->cart;
     }
 
     public function removeItem(int $productId): self
     {
-        info($this->cart->id);
         $this->cart->items()->where('product_id', $productId)->delete();
 
         return $this;
