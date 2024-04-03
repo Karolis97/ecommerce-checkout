@@ -87,3 +87,10 @@ Tests:    22 passed (108 assertions)
 Duration: 2.15s
 Parallel: 11 processes
 ```
+
+## Testing orders
+
+**Credit card information:**
+* Number: 5105 1051 0510 5100 
+* Expiry date: 01/25 
+* CVV: 111
