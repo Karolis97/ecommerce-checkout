@@ -73,6 +73,8 @@ cp .env.example .env
 ./vendor/bin/sail artisan test
 ```
 
+Note: `Horizon` is automatically runs based on `docker/8.3/supervisord.conf` configuration
+
 ## Application
 
 <p align="center"><img src="./resources/images/application/image_3.png" width="600"></p>
