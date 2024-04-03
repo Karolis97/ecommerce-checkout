@@ -16,7 +16,8 @@ Create checkout ant implement API payment provider.
    5. ...
 2. Add payment provider events and jobs
 3. Implement add to cart functionality
-4. ...
+4. Implement loading and error states at frontend
+5. ...
 
 ## Architecture
 
